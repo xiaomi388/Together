@@ -6,7 +6,7 @@ const goToRoom = (history, roomId) => {
 }
 
 
-export function goToRoomInput({history}) {
+export function GoToRoomInput({history}) {
   let [roomId, setRoomId] = useState(shortId.generate());
 
   return (<div className="enter-room-container">
