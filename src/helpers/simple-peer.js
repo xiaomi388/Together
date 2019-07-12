@@ -22,6 +22,9 @@ export default class VideoCall {
         })
         return this.peer
     }
+    getPeer = () => {
+        return this.peer
+    }
     connect = (otherId) => {
         this.peer.signal(otherId)
     }  

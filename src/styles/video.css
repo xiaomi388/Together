@@ -1,51 +1,69 @@
-.local-video-wrapper{
-    display: flex;
-}
 #localVideo{
-    height: 112px;
-    right: 0;
-    margin: 24px auto;
-    display: inline-block;
-    border-radius: 4px;
-}
-.video-wrapper{
-    height: 100vh;
-    background: #252839;
     width: 100%;
+    /* height: 200px; */
+    /* right: 0; */
+    /* margin: 24px auto; */
+    /* display: inline-block;
+    border-radius: 4px; */
 }
 #remoteVideo{
-    background: transparent;
-    margin: 0 auto;
-    display: block;
-    max-width: 100vw;
-    height: 100%;
+    width: 100%;
+    /* background: transparent; */
+    /* margin: 0 auto; */
+    /* display: block;
+    max-width: 300px;
+    height: 100%; */
 }
-@media screen and (max-width:480px){
-    .video-wrapper{
-        position: relative;
-        max-width: 100vw;
-    }
-    #localVideo{
-        height: 80px;
-    }
-    #remoteVideo{
-        width: 100%;
-        height: auto;
-        margin-top: 20%;
-    }
+
+.cameraArea {
+
 }
-@media screen and (orientation:landscape) {
-    #localVideo{
-        position: absolute;
-        left: 0;
-        top: 0;
-        margin-left: 0px;
-        margin-top: 0px;
-    }
+
+.inputArea {
 }
-@media screen and (min-width:768px){
-    #localVideo{
-        margin-left: 32px;
-        margin-top: 12px;
-    }
+
+.msgBox {
+    background-color: white; 
+    flex: 1;
+    overflow: auto;
+}
+
+
+.header, .footer {
+    flex-grow: 1;
+}
+
+.footer {
+    color: #031529;
+}
+
+.content {
+    flex-grow: 2;
+}
+/* 
+.content, .contenWrapper, .chatColumn {
+    height: 100%; 
+    min-height: 100%;
+} */
+
+.layout {
+    min-height: "100vh";
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+}
+
+.chatCol {
+    background-color: black;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.videoCol {
+    flex: 6
 }
