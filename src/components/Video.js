@@ -102,11 +102,24 @@ class Video extends React.Component {
                 console.log(joined)
                 this.setState({msgBoxData: joined})
             } else if (data.type == 'playerOnPlay') {
+                var bak = this.handleOnPlay 
+                this.handleOnPlay = (e) => {}
                 this.videoPlayer.seekTo(data.content)
-                this.setState({videoPlaying: true})
+                if (this.state.videoPlaying == false) {
+                    this.setState({videoPlaying: true}, () => {
+                        this.handleOnPlay = bak
+                    })
+                }
             } else if (data.type == 'playerOnPause') {
-                this.setState({videoPlaying: false})
+                // this.videoPlayer.seekTo(data.content) 
+                var bak = this.handleOnPlay 
+                this.handleOnPlay = (e) => {}
                 this.videoPlayer.seekTo(data.content)
+                if (this.state.videoPlaying == true) {
+                    this.setState({videoPlaying: false}, () => {
+                        this.handleOnPlay = bak
+                    })
+                }
             } else if (data.type == 'playerOnSeek') {
                 this.videoPlayer.seekTo(data.content)
             }
