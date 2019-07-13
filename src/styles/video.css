@@ -30,7 +30,6 @@
 
 
 .header, .footer {
-    flex-grow: 1;
 }
 
 .footer {
@@ -38,7 +37,7 @@
 }
 
 .content {
-    flex-grow: 2;
+    flex: 1;
 }
 /* 
 .content, .contenWrapper, .chatColumn {
