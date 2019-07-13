@@ -6,6 +6,7 @@ import { List, Typography, Input, Layout, Row, Col, Button } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller';
 import AnyHeight from 'react-list-any-height'
 import ReactList from 'react-list';
+import ReactPlayer from 'react-player';
 const { Header, Footer, Sider, Content } = Layout;
 
 class Video extends React.Component {
@@ -20,10 +21,14 @@ class Video extends React.Component {
             full: false,
             msgBoxData: [
             ],
-            chattingInputValue: ''
+            chattingInputValue: '',
+            videoUrl: '',
+            videoPlaying: false,
+            videoInputUrl: ''
         }
-
+        this.videoPlayer = null
         this.sndMsg = this.sndMsg.bind(this);
+        this.inputRef = null
     }
     videoCall = new VideoCall()
     componentDidMount() {
@@ -89,12 +94,21 @@ class Video extends React.Component {
             console.log(err)
         })
         peer.on('data', data => {
+            console.log('rec msg from peer:')
             console.log(JSON.parse(data))
             data = JSON.parse(data)
-            if (data.type == "msg") {
+            if (data.type == 'msg') {
                 var joined = this.state.msgBoxData.concat([data.content])
                 console.log(joined)
                 this.setState({msgBoxData: joined})
+            } else if (data.type == 'playerOnPlay') {
+                this.videoPlayer.seekTo(data.content)
+                this.setState({videoPlaying: true})
+            } else if (data.type == 'playerOnPause') {
+                this.setState({videoPlaying: false})
+                this.videoPlayer.seekTo(data.content)
+            } else if (data.type == 'playerOnSeek') {
+                this.videoPlayer.seekTo(data.content)
             }
         })
     }
@@ -119,10 +133,38 @@ class Video extends React.Component {
             chattingInputValue: event.target.value
         })
     }
+    handleOnPause = (event) => {
+        console.log('send on pause')
+        var data = {
+            type: "playerOnPause",
+            content: this.videoPlayer.getCurrentTime()
+        }
+        this.state.peer.send(JSON.stringify(data))
+    }
+
+    handleOnPlay = (event) => {
+        console.log('send on play')
+        var data = {
+            type: "playerOnPlay",
+            content: this.videoPlayer.getCurrentTime()
+        }
+        this.state.peer.send(JSON.stringify(data))
+    }
+    fileInputOnChange = (e) => {
+        const file = e.target.files[0]
+        console.log(file)
+        if(file) this.setState({videoUrl: URL.createObjectURL(file)})
+        e.target.value = '' // 上传之后还原
+    }
+    handleVideoURLInput = (event) => {
+        console.log(event.target.value)
+        this.setState({videoInputUrl: event.target.value})
+    }
+
     render() {
         return (
             <Layout className="layout" style={{ minHeight: "100vh", maxHeight: "100vh" }}>
-                <Header className="header">Test</Header>
+                <Header className="header">Together v0.0.1</Header>
                 <Content className="content">
                     <div className="chatCol">
                         <div className="cameraArea">
@@ -146,8 +188,26 @@ class Video extends React.Component {
                     </div>
 
                     <div className="videoCol">
+                        <div className="playerWrapper">
+                            <ReactPlayer className="player" url={this.state.videoUrl} 
+                                playing={this.state.videoPlaying} controls={true} 
+                                ref={player => {this.videoPlayer = player}} 
+                                onPlay={this.handleOnPlay}
+                                onPause={this.handleOnPause}
+                                />
+                        </div>
+                        <div className="controlPanelWrapper">
+                            <Button type="primary" onClick={ e => this.inputRef.click()}>Select Local Video</Button>
+                            <input type="file" name="file" onChange={this.fileInputOnChange} style={{display:'none'}} ref={ e => this.inputRef = e}/>
 
+                            <Input onChange={ e => this.handleVideoURLInput(e) } />
+                            <Button type="primary" onClick={ e => this.setState({videoUrl: this.state.videoInputUrl})}>Load From URL</Button>
+
+                            {/* <Button onClick={e => console.log(this.videoPlayer.getCurrentTime())}></Button> */}
+                        </div>
                     </div>
+
+
                     {/* <Row className="content">
                         <Col span={4} className="chatColumn">
                             <Row style={{flex: 1}}>
@@ -165,7 +225,7 @@ class Video extends React.Component {
                     </Row>
                     <div className="push"></div> */}
                 </Content>
-                <Footer className="footer" style={{ backgroundColor: "#031529" }}>This is foot</Footer>
+                {/* <Footer className="footer" >This is foot</Footer> */}
 
             </Layout>
 
