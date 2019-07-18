@@ -20,6 +20,7 @@
 .env.production.local
 .env.production
 nohup.out
+.gitconfig
 
 npm-debug.log*
 yarn-debug.log*
