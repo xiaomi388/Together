@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Room from './components/Room';
 import './styles/room.css';
 import './App.css';
-
 import { BrowserRouter, Route } from 'react-router-dom';
 import { GoToRoomInput } from './components/GoToRoomInput';
 
