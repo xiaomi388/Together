@@ -1,6 +1,6 @@
-import Peer from 'simple-peer'
+import Peer from 'simple-peer' 
 
-export default class VideoCall {
+export default class PeerConstructor {
     peer = null 
     init = (stream, initiator) => {
         this.peer = new Peer({
