@@ -1,0 +1,23 @@
+.playerWrapper {
+    flex: 1;
+    background-color: black;
+}
+
+.cinemaWidgetInnerWrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.controlPanelWrapper {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    background-color: black;
+}
+
+.player {
+    min-height: 100%;
+    min-width: 100%;
+    flex: 1;
+}

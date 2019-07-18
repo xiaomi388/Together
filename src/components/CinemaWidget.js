@@ -1,8 +1,9 @@
 import React from 'react'
 
-import { Input, Layout, Button } from 'antd'
+import { Input, Button } from 'antd'
 import ReactPlayer from 'react-player'
-import { timeout } from 'q';
+
+import '../styles/cinemaWidget.css'
 
 class CinemaWidget extends React.Component {
     constructor() {
@@ -67,7 +68,7 @@ class CinemaWidget extends React.Component {
     }
 
     render() {
-        return (<div>
+        return (<div className="cinemaWidgetInnerWrapper">
             <div className="playerWrapper">
                 <ReactPlayer className="player" url={this.state.videoUrl}
                     playing={this.state.videoPlaying} controls={true}

@@ -2,7 +2,7 @@ import React from 'react'
 import PeerConstrutor from '../helpers/simple-peer'
 import '../styles/room.css'
 import io from 'socket.io-client'
-import { Input, Layout, Button } from 'antd'
+import { Layout } from 'antd'
 import ChatWidget from './ChatWidget'
 import CinemaWidget from './CinemaWidget'
 const { Header, Content } = Layout
