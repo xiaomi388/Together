@@ -1,10 +1,10 @@
-# WebRTC with react
-This is a simple 1-to-1 video chat room example using react with webRTC. This is experimental for learnig purposes. I hope that this project help you to learn something. You can test this on https://video-chat.now.sh put a room id that you want to create and click enter the other peer have to use the same room id. Sometimes it takes a bit longer to connect(no longer than one minute).     
+# Together
+Together is a peer-to-peer chat room based on WebRTC with features below:
 
+1. Supports video chat and text input.
+2. **Supports watching videos together**. With Together, you could watch videos from local files or online videos with your close friend synchronously, which means you could both be in the exactly same moment of a video. When one stops/plays/seeks the video, the video player of the other person will do the exactly same action. Currently we use the video player plugin [react-player](https://www.npmjs.com/package/react-player), so we support videos from websites which react-player supports.
 
-To run this application you need to create a TURN account. You can create one using this service http://numb.viagenie.ca/cgi-bin/numbacct 
+## TODO
 
-Change the `.env.example` to `.env` or `.env.local`
-
-Put your turn account on the .env file
-
+1. Implement file transfer.
+2. Beautify the UI.

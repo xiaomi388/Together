@@ -1,0 +1,19 @@
+#localVideo{
+    width: 100%;
+}
+
+#remoteVideo{
+    width: 100%;
+}
+
+.chatWidgetInnerWrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.msgBox {
+    background-color: white; 
+    flex: 1;
+    overflow: auto;
+}
