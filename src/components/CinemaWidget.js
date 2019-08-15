@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Input, Button } from 'antd'
+import { Input, Button, Icon } from 'antd'
 import ReactPlayer from 'react-player'
 
 import '../styles/cinemaWidget.css'
@@ -69,6 +69,9 @@ class CinemaWidget extends React.Component {
 
     render() {
         return (<div className="cinemaWidgetInnerWrapper">
+            <div className="header">
+                <img className="logo" src={require('../assets/logo.png')} alt="logo" />
+            </div>
             <div className="playerWrapper">
                 <ReactPlayer className="player" url={this.state.videoUrl}
                     playing={this.state.videoPlaying} controls={true}
@@ -77,12 +80,28 @@ class CinemaWidget extends React.Component {
                     onPause={ e =>this.handlePlayerEvent(e, 'pause') }
                 />
             </div>
+            <div className="info">Play video from...</div>
                 <div className="controlPanelWrapper">
-                    <Button type="primary" onClick={e => this.inputRef.click()}>Select Local Video</Button>
-                    <input type="file" name="file" onChange={this.fileInputOnChange} style={{ display: 'none' }} ref={e => this.inputRef = e} />
-
-                    <Input onChange={e => this.handleVideoURLInput(e)} />
-                    <Button type="primary" onClick={e => this.setState({ videoUrl: this.state.videoInputUrl })}>Load From URL</Button>
+                    <div className="link">
+                        <Input 
+                            size= "large"
+                            prefix={<Icon type="link" style={{ color: '#6C63FF' }} />}
+                            placeholder="Paste URL from YouTube" 
+                            allowClear 
+                            onChange={e => this.handleVideoURLInput(e)} />
+                        <Button id="btn-go" type="primary" 
+                            size= "large" 
+                            onClick={e => this.setState({ videoUrl: this.state.videoInputUrl })}>
+                            <Icon type="caret-right" style={{ fontSize: '24px', color: '#fff' }}/>
+                        </Button>
+                    </div>
+                    <div className="local">
+                        <Button id="btn-file" type="primary" 
+                            size= "large"
+                            icon="file"
+                            onClick={e => this.inputRef.click()}>Select Local Video</Button>
+                        <input type="file" name="file" onChange={this.fileInputOnChange} style={{ display: 'none' }} ref={e => this.inputRef = e} />
+                    </div>
                 </div>
         </div>)
     }

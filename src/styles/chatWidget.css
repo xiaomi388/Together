@@ -1,12 +1,15 @@
 #localVideo{
     width: 100%;
+    background: #2F2E41;
 }
 
 #remoteVideo{
     width: 100%;
+    background: #2F2E41;
 }
 
 .chatWidgetInnerWrapper {
+    margin: 20px 10px;
     height: 100vh;
     display: flex;
     flex-direction: column;

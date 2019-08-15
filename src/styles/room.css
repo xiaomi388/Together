@@ -1,9 +1,3 @@
-
-.header, .footer {
-    color: white;
-    text-align: center;
-}
-
 .footer {
     color: #031529;
 }
@@ -20,15 +14,17 @@
 }
 
 .chatWidgetWrapper {
-    background-color: black;
     flex: 1;
     display: flex;
     flex-direction: column;
+    background: #FFFFFF;
+    box-shadow: -1px 0 20px 0 rgba(47,46,65,0.20);
+
 }
 
 .cinemaWidgetWrapper {
-    flex: 6;
+    flex: 3;
     display: flex;
     flex-direction: column;
-    background-color: grey;
+    background-color: #F2EEFF;
 }
