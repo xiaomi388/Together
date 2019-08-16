@@ -224,6 +224,13 @@ class Room extends React.Component {
             <Layout className="layout" style={{ minHeight: "100vh", maxHeight: "100vh" }}>
                 <Header className="header">Together v0.0.2</Header>
                 <Content className="content">
+                    <div className="cinemaWidgetWrapper">
+                        <CinemaWidget 
+                            peer={this.state.peer} 
+                            sndData={this.sndData}
+                            ref={e => this.cinemaWidgetRef = e}
+                            ></CinemaWidget>
+                    </div>
                     <div className="chatWidgetWrapper">
                         <ChatWidget 
                             msgBoxData={this.state.msgBoxData}
@@ -238,13 +245,6 @@ class Room extends React.Component {
                             remoteStream={this.state.remoteStream}>
                         </ChatWidget>
                         <p style={{ color: "white"}} > Current Status: {this.state.connectedStatus} </p>
-                    </div>
-                    <div className="cinemaWidgetWrapper">
-                        <CinemaWidget 
-                            peer={this.state.peer} 
-                            sndData={this.sndData}
-                            ref={e => this.cinemaWidgetRef = e}
-                            ></CinemaWidget>
                     </div>
                 </Content>
             </Layout>
