@@ -8,3 +8,4 @@ Together is a peer-to-peer chat room based on WebRTC with features below:
 
 1. Implement file transfer.
 2. Beautify the UI.
+3. Support the option to enable/disable audio/camera.

@@ -36,6 +36,18 @@ class ChatWidget extends React.Component {
         }
     }
 
+    inputAreaOnKeyDown = (e) => {
+        if (e.keyCode === 13) {
+            this.props.sndMsg(this.state.chatInputValue)
+        }
+    }
+
+    refreshMsgBox = () => {
+        var element = document.getElementsByClassName("msgBox")[0]
+        element.scrollTop = element.scrollHeight
+    }
+
+
     render() {
         return (
             <div className="chatWidgetInnerWrapper">
@@ -52,7 +64,7 @@ class ChatWidget extends React.Component {
                     ))}
                 </div>
 
-                <div className="inputArea">
+                <div className="inputArea" onKeyDown={this.inputAreaOnKeyDown}>
                     <Input style={{ width: '70%' }} onChange={ e => this.handleChatInput(e) } />
                     <Button style={{ width: '30%' }} type="primary" onClick={(e) => this.props.sndMsg(this.state.chatInputValue)}>Send</Button>
                 </div>

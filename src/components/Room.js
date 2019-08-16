@@ -7,16 +7,25 @@ import ChatWidget from './ChatWidget'
 import CinemaWidget from './CinemaWidget'
 const { Header, Content } = Layout
 
+const ConnectedStatus = {
+    UNCONNECTED: 'unconnected',
+    HOST_WAITING: 'waiting for the guest',
+    GUEST_WAITING: 'waiting for the host',
+    HOST_CONNECTED: 'connected to the host',
+    GUEST_CONNECTED: 'connected to the guest'
+}
+
 class Room extends React.Component {
     constructor() {
         super()
         this.state = {
             initiator: false,
-            peer: {},
+            peer: null,
             full: false,
             test: "helloworld",
             localStream: null,
-            msgBoxData: []
+            msgBoxData: [],
+            connectedStatus: ConnectedStatus.UNCONNECTED
         }
         this.chatWidgetRef = null
         this.cinemaWidgetRef = null
@@ -27,25 +36,75 @@ class Room extends React.Component {
         this.setState({ socket })
         const { roomId } = this.props.match.params
         socket.on('init', () => {
-            this.setState({ initiator: true })
+            this.setState({ initiator: true, connectedStatus: ConnectedStatus.HOST_WAITING })
         })
         socket.on('ready', () => {
             this.enter(roomId)
+            if (this.state.connectedStatus == ConnectedStatus.UNCONNECTED) {
+                this.setState({connectedStatus: ConnectedStatus.GUEST_WAITING})
+            }
         })
         socket.on('desc', (data) => {
-            console.log(data)
+            // If the message is sent by the peer itself, discard it.
             if (data.type === 'offer' && this.state.initiator) return
             if (data.type === 'answer' && !this.state.initiator) return
-            console.log('start call!')
             this.state.peer.signal(data)
         })
         socket.on('disconnected', () => {
-            this.setState({ initiator: true })
+            this.setState({ initiator: true, connectedStatus: ConnectedStatus.HOST_WAITING })
         })
         socket.on('full', () => {
             this.setState({ full: true })
         })
         socket.emit('join', { roomId: roomId })
+    }
+
+    // New a peer object and register callback
+    enter = (roomId) => {
+        var peerConstructor = new PeerConstrutor()
+        const peer = peerConstructor.init(this.state.localStream, this.state.initiator)
+        this.setState({ peer })
+        this.registerPeerCallback(roomId)
+    }
+
+    registerPeerCallback(roomId) {
+        var peer = this.state.peer
+        const component = this
+
+        /* Fired when the peer wants to send signaling data to the remote peer.
+        ** Be sure to listen to this event immediately to avoid missing it. 
+        ** For initiator: true peers, it fires right away. 
+        ** For initatior: false peers, it fires when the remote offer is received. */
+        peer.on('signal', data => {
+            const signal = {
+                room: roomId,
+                desc: data
+            }
+            component.state.socket.emit('signal', signal)
+        })
+        peer.on('connect', () => {
+            if (this.state.connectedStatus === ConnectedStatus.HOST_WAITING) {
+                this.setState({connectedStatus: ConnectedStatus.HOST_CONNECTED})
+            } else if (this.state.connectedStatus === ConnectedStatus.GUEST_WAITING) {
+                this.setState({connectedStatus: ConnectedStatus.GUEST_CONNECTED})
+            }
+        })
+        peer.on('stream', stream => {
+            // FIXME: is there a better solution?
+            this.chatWidgetRef.setVideoStream(null, stream)
+        })
+        peer.on('error', function (err) {
+            console.log(err)
+        })
+        peer.on('data', data => {
+            var dataObj = JSON.parse(data)
+            if (dataObj.type == 'msg') {
+                var joined = this.state.msgBoxData.concat([dataObj.content])
+                this.setState({msgBoxData: joined}, this.refreshMsgBox)
+            } else if (dataObj.type == 'player') {
+                this.cinemaWidgetRef.handlePlayerData(dataObj)
+            }
+        })
     }
 
 
@@ -79,48 +138,18 @@ class Room extends React.Component {
             content: msg
         }
         var joined = this.state.msgBoxData.concat([msg])
-        this.setState({msgBoxData: joined})
-        this.state.peer.send(JSON.stringify(data))
+        this.setState({msgBoxData: joined}, this.refreshMsgBox)
+        if (this.state.connectedStatus == ConnectedStatus.HOST_CONNECTED || 
+            this.state.connectedStatus == ConnectedStatus.GUEST_CONNECTED) {
+            this.state.peer.send(JSON.stringify(data))
+        }
     }
 
     sndData = (data) => {
         this.state.peer.send(data)
     }
 
-    registerPeerCallback(roomId) {
-        var peer = this.state.peer
-        const component = this
-        peer.on('signal', data => {
-            const signal = {
-                room: roomId,
-                desc: data
-            }
-            component.state.socket.emit('signal', signal)
-        })
-        peer.on('stream', stream => {
-            // FIXME: is there a better solution?
-            this.chatWidgetRef.setVideoStream(null, stream)
-        })
-        peer.on('error', function (err) {
-            console.log(err)
-        })
-        peer.on('data', data => {
-            var dataObj = JSON.parse(data)
-            if (dataObj.type == 'msg') {
-                var joined = this.state.msgBoxData.concat([dataObj.content])
-                this.setState({msgBoxData: joined})
-            } else if (dataObj.type == 'player') {
-                this.cinemaWidgetRef.handlePlayerData(dataObj)
-            }
-        })
-    }
 
-    enter = (roomId) => {
-        var peerConstructor = new PeerConstrutor()
-        const peer = peerConstructor.init(this.state.localStream, this.state.initiator)
-        this.setState({ peer })
-        this.registerPeerCallback(roomId)
-    }
 
     renderFull = () => {
         if (this.state.full) {
@@ -144,6 +173,7 @@ class Room extends React.Component {
                             ref={e => this.chatWidgetRef = e}
                             remoteStream={this.state.remoteStream}>
                         </ChatWidget>
+                        <p style={{ color: "white"}} > Current Status: {this.state.connectedStatus} </p>
                     </div>
                     <div className="cinemaWidgetWrapper">
                         <CinemaWidget 
