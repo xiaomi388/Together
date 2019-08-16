@@ -5,6 +5,7 @@ export default class PeerConstructor {
     init = (stream, initiator) => {
         this.peer = new Peer({
             initiator: initiator,
+            stream: stream,
             trickle: false,
             reconnectTimer: 1000,
             iceTransportPolicy: 'relay',
@@ -17,10 +18,6 @@ export default class PeerConstructor {
                         credential: process.env.REACT_APP_TURN_CREDENCIAL
                     },
                 ]
-            }
-        }, () => {
-            if (stream) {
-                this.peer.addStream(stream)
             }
         })
         return this.peer

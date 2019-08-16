@@ -23,10 +23,12 @@ class Room extends React.Component {
             peer: null,
             full: false,
             test: "helloworld",
-            localStream: null,
             msgBoxData: [],
             connectedStatus: ConnectedStatus.UNCONNECTED,
         }
+        this.isLocalCameraOpen = true
+        this.localStream = null
+        this.remoteStream = null
         this.chatWidgetRef = null
         this.cinemaWidgetRef = null
     }
@@ -73,32 +75,30 @@ class Room extends React.Component {
     // New a peer object and register callback
     enter = (roomId) => {
         var peerConstructor = new PeerConstrutor()
-        const peer = peerConstructor.init(this.state.localStream, this.state.initiator)
+        const peer = peerConstructor.init(this.localStream, this.state.initiator)
         this.setState({ peer })
         this.registerPeerCallback(roomId)
     }
 
     switchCamera = (e) => {
-        console.log(this.state.localStream)
-        if (this.state.localStream) {
-            if (this.peer) {
-                this.peer.removeStream(this.state.localStream)
-            }
-            if (this.state.localStream) {
-                let tracks = this.state.localStream.getTracks();
+        if (this.isLocalCameraOpen) {
+            if (this.localStream) {
+                let tracks = this.localStream.getTracks();
                 tracks.forEach(function(track) {
-                    track.stop();
+                    track.enabled = false;
                 });
             }
-            this.chatWidgetRef.setVideoStream(null, null)
-            this.setState({localStream: null})
+            this.isLocalCameraOpen = false
         } else {
-            this.getUserMedia(() => {
-                this.peer.addStream(this.state.localStream)
-            })
+            if (this.localStream) {
+                let tracks = this.localStream.getTracks();
+                tracks.forEach(function(track) {
+                    track.enabled = true;
+                });
+            }
+            this.isLocalCameraOpen = true
         }
     }
-
 
     registerPeerCallback(roomId) {
         var peer = this.state.peer
@@ -129,8 +129,9 @@ class Room extends React.Component {
 
         })
         peer.on('stream', stream => {
+            console.log('haha!')
             // FIXME: is there a better solution?
-            this.chatWidgetRef.setVideoStream(null, stream)
+            this.chatWidgetRef.setVideoStream(stream, false)
         })
         peer.on('error', function (err) {
             console.log(err)
@@ -164,12 +165,13 @@ class Room extends React.Component {
                 audio: true
             }
             navigator.getUserMedia(op, stream => {
-                this.setState({ localStream: stream })
+                this.localStream = stream
 
                 // FIXME: is there a better solution?
-                this.chatWidgetRef.setVideoStream(stream, null)
+                this.chatWidgetRef.setVideoStream(stream)
                 resolve()
             }, () => {
+                console.log('fail?')
                 resolve()
              })
         })
@@ -239,11 +241,11 @@ class Room extends React.Component {
                             userMediaOnGotten={this.userMediaOnGotten} 
                             sndMsg={this.sndMsg}
                             sndNewName={this.sndNewName}
-                            localStream={this.state.localStream}
+                            localStream={this.localStream}
                             test={this.state.test}
                             ref={e => this.chatWidgetRef = e}
                             switchCamera={this.switchCamera}
-                            remoteStream={this.state.remoteStream}>
+                            remoteStream={this.remoteStream}>
                         </ChatWidget>
                         <p> Current Status: {this.state.connectedStatus} </p>
                     </div>

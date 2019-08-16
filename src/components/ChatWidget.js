@@ -29,10 +29,11 @@ class ChatWidget extends React.Component {
         }
     }
 
-    setVideoStream(localStream, remoteStream) {
-        this.localVideo.srcObject = localStream
-        if (remoteStream) {
-            this.remoteVideo.srcObject = remoteStream
+    setVideoStream(stream, isLocal=true) {
+        if (isLocal) {
+            this.localVideo.srcObject = stream
+        } else {
+            this.remoteVideo.srcObject = stream
         }
     }
 
