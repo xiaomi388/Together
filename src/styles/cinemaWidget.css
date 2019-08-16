@@ -77,3 +77,7 @@ button {
     background: rgb(82, 76, 199);
 }
 
+input:focus {
+    box-shadow: none !important;
+}
+

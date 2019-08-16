@@ -28,3 +28,7 @@
     flex-direction: column;
     background-color: #F2EEFF;
 }
+
+input:hover, input:focus {
+    border-color: #6C63FF !important;
+}

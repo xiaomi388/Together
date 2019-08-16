@@ -53,8 +53,11 @@ class ChatWidget extends React.Component {
                 </div>
 
                 <div className="inputArea">
-                    <Input style={{ width: '70%' }} onChange={ e => this.handleChatInput(e) } />
-                    <Button style={{ width: '30%' }} type="primary" onClick={(e) => this.props.sndMsg(this.state.chatInputValue)}>Send</Button>
+                    <Input id="inputBox" 
+                        size= "large"
+                        placeholder="Type a message here..." 
+                        onChange={ e => this.handleChatInput(e)}
+                        onPressEnter = {(e) => this.props.sndMsg(this.state.chatInputValue)} />
                 </div>
             </div>
         )

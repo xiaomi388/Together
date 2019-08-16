@@ -20,3 +20,11 @@
     flex: 1;
     overflow: auto;
 }
+
+#inputBox {
+    background: #FFFFFF;
+    box-shadow: 0 5px 20px 0 rgba(108,99,255,0.20) !important;
+    border-radius: 5px !important;
+    /* border: none !important; */
+    /* margin: 0 10px; */
+}
