@@ -1,10 +1,12 @@
 #localVideo{
     width: 100%;
+    /* visibility: hidden; */
     background: #2F2E41;
 }
 
 #remoteVideo{
     width: 100%;
+    /* visibility: hidden; */
     background: #2F2E41;
 }
 

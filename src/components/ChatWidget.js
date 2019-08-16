@@ -9,6 +9,8 @@ class ChatWidget extends React.Component {
         this.state = {
             chatInputValue: '',
             msgBoxData: [],
+            localUserName: '',
+            remoteUserName: ''
         }
     }
 
@@ -28,20 +30,56 @@ class ChatWidget extends React.Component {
     }
 
     setVideoStream(localStream, remoteStream) {
-        if (localStream) {
-            this.localVideo.srcObject = localStream
-        }
+        this.localVideo.srcObject = localStream
         if (remoteStream) {
             this.remoteVideo.srcObject = remoteStream
         }
+    }
+
+    inputAreaOnKeyDown = (e) => {
+        if (e.keyCode === 13) {
+            this.props.sndMsg(this.state.chatInputValue)
+        }
+    }
+
+    refreshMsgBox = () => {
+        var element = document.getElementsByClassName("msgBox")[0]
+        element.scrollTop = element.scrollHeight
+    }
+
+    handleNameInput = (e) => {
+        this.setState({localUserName: e.target.value})
+        this.props.sndNewName(e.target.value)
+    }
+
+    setUserName = (localUserName=null, remoteUserName=null) => {
+        if (localUserName) {
+            this.setState({localUserName, localUserName})
+        }
+        if (remoteUserName) {
+            this.setState({remoteUserName, remoteUserName})
+        }
+
+    }
+
+    getUserName = () => {
+        return [this.state.localUserName, this.state.remoteUserName]
     }
 
     render() {
         return (
             <div className="chatWidgetInnerWrapper">
                 <div className="cameraArea">
-                    <video autoPlay id="localVideo" muted ref={video => (this.localVideo = video)}></video>
-                    <video autoPlay id="remoteVideo" ref={video => (this.remoteVideo = video)}></video>
+                    <div className="localCameraArea">
+                        <Button style={{ width: '100%'}} type="primary" onClick={this.props.switchCamera} >Turn On/Off Camera</Button>
+                        <Input value={this.state.localUserName} onChange={ e => this.handleNameInput(e) } />
+                        <video autoPlay id="localVideo" muted ref={video => (this.localVideo = video)}></video>
+                    </div>"
+
+                    <div className="remoteCameraArea">
+                        <Input value={this.state.remoteUserName} disabled />
+                        <video autoPlay id="remoteVideo" ref={video => (this.remoteVideo = video)}></video>
+                    </div>"
                 </div>
 
 

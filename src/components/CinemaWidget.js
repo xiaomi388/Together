@@ -24,11 +24,11 @@ class CinemaWidget extends React.Component {
         if (dataObj.content.action == 'play') {
             this.setState({videoPlaying: true})
             
-            // judge: if currentTime is very close to peer.currentTime,
-            // then stop seeking to this time, 
-            // otherwise packets will be sent back and forth.
-            // This is because when seeks the video on YouTube,
-            // the video will first be stopped, and then be started.
+            /* Judge: if currentTime is very close to peer.currentTime,
+            ** then stop seeking to this time, 
+            ** otherwise packets will be sent back and forth.
+            ** This is because when seeks the video on YouTube,
+            ** the video will first be stopped, and then be started. */
             if (Math.abs(this.videoPlayer.getCurrentTime() - dataObj.content.currentTimeSec) > 1) {
                 this.videoPlayer.seekTo(dataObj.content.currentTimeSec)
             }
