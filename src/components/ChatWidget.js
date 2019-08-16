@@ -74,12 +74,12 @@ class ChatWidget extends React.Component {
                         <Button style={{ width: '100%'}} type="primary" onClick={this.props.switchCamera} >Turn On/Off Camera</Button>
                         <Input value={this.state.localUserName} onChange={ e => this.handleNameInput(e) } />
                         <video autoPlay id="localVideo" muted ref={video => (this.localVideo = video)}></video>
-                    </div>"
+                    </div>
 
                     <div className="remoteCameraArea">
                         <Input value={this.state.remoteUserName} disabled />
                         <video autoPlay id="remoteVideo" ref={video => (this.remoteVideo = video)}></video>
-                    </div>"
+                    </div>
                 </div>
 
 

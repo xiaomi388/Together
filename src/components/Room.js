@@ -11,8 +11,8 @@ const ConnectedStatus = {
     UNCONNECTED: 'unconnected',
     HOST_WAITING: 'waiting for the guest',
     GUEST_WAITING: 'waiting for the host',
-    HOST_CONNECTED: 'connected to the host',
-    GUEST_CONNECTED: 'connected to the guest'
+    HOST_CONNECTED: 'connected to the guest',
+    GUEST_CONNECTED: 'connected to the host'
 }
 
 class Room extends React.Component {
@@ -169,7 +169,9 @@ class Room extends React.Component {
                 // FIXME: is there a better solution?
                 this.chatWidgetRef.setVideoStream(stream, null)
                 resolve()
-            }, () => { })
+            }, () => {
+                resolve()
+             })
         })
     }
 
@@ -222,7 +224,6 @@ class Room extends React.Component {
     render() {
         return (
             <Layout className="layout" style={{ minHeight: "100vh", maxHeight: "100vh" }}>
-                <Header className="header">Together v0.0.2</Header>
                 <Content className="content">
                     <div className="cinemaWidgetWrapper">
                         <CinemaWidget 
@@ -244,7 +245,7 @@ class Room extends React.Component {
                             switchCamera={this.switchCamera}
                             remoteStream={this.state.remoteStream}>
                         </ChatWidget>
-                        <p style={{ color: "white"}} > Current Status: {this.state.connectedStatus} </p>
+                        <p> Current Status: {this.state.connectedStatus} </p>
                     </div>
                 </Content>
             </Layout>
