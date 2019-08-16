@@ -1,11 +1,11 @@
 #localVideo{
     width: 100%;
-    visibility: hidden;
+    /* visibility: hidden; */
 }
 
 #remoteVideo{
     width: 100%;
-    visibility: hidden;
+    /* visibility: hidden; */
 }
 
 .chatWidgetInnerWrapper {

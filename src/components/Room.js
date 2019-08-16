@@ -25,7 +25,7 @@ class Room extends React.Component {
             test: "helloworld",
             localStream: null,
             msgBoxData: [],
-            connectedStatus: ConnectedStatus.UNCONNECTED
+            connectedStatus: ConnectedStatus.UNCONNECTED,
         }
         this.chatWidgetRef = null
         this.cinemaWidgetRef = null
@@ -36,12 +36,19 @@ class Room extends React.Component {
         this.setState({ socket })
         const { roomId } = this.props.match.params
         socket.on('init', () => {
-            this.setState({ initiator: true, connectedStatus: ConnectedStatus.HOST_WAITING })
+            this.setState({ 
+                initiator: true, 
+                connectedStatus: ConnectedStatus.HOST_WAITING,
+            })
+            this.chatWidgetRef.setUserName('Host')
         })
         socket.on('ready', () => {
             this.enter(roomId)
             if (this.state.connectedStatus == ConnectedStatus.UNCONNECTED) {
-                this.setState({connectedStatus: ConnectedStatus.GUEST_WAITING})
+                this.setState({
+                    connectedStatus: ConnectedStatus.GUEST_WAITING,
+                })
+            this.chatWidgetRef.setUserName('Guest')
             }
         })
         socket.on('desc', (data) => {
@@ -51,7 +58,11 @@ class Room extends React.Component {
             this.state.peer.signal(data)
         })
         socket.on('disconnected', () => {
-            this.setState({ initiator: true, connectedStatus: ConnectedStatus.HOST_WAITING })
+            this.setState({ 
+                initiator: true, 
+                connectedStatus: ConnectedStatus.HOST_WAITING,
+            })
+            this.chatWidgetRef.setUserName('Host')
         })
         socket.on('full', () => {
             this.setState({ full: true })
@@ -66,6 +77,28 @@ class Room extends React.Component {
         this.setState({ peer })
         this.registerPeerCallback(roomId)
     }
+
+    switchCamera = (e) => {
+        console.log(this.state.localStream)
+        if (this.state.localStream) {
+            if (this.peer) {
+                this.peer.removeStream(this.state.localStream)
+            }
+            if (this.state.localStream) {
+                let tracks = this.state.localStream.getTracks();
+                tracks.forEach(function(track) {
+                    track.stop();
+                });
+            }
+            this.chatWidgetRef.setVideoStream(null, null)
+            this.setState({localStream: null})
+        } else {
+            this.getUserMedia(() => {
+                this.peer.addStream(this.state.localStream)
+            })
+        }
+    }
+
 
     registerPeerCallback(roomId) {
         var peer = this.state.peer
@@ -83,11 +116,17 @@ class Room extends React.Component {
             component.state.socket.emit('signal', signal)
         })
         peer.on('connect', () => {
+
+            // Set connected status
             if (this.state.connectedStatus === ConnectedStatus.HOST_WAITING) {
                 this.setState({connectedStatus: ConnectedStatus.HOST_CONNECTED})
             } else if (this.state.connectedStatus === ConnectedStatus.GUEST_WAITING) {
                 this.setState({connectedStatus: ConnectedStatus.GUEST_CONNECTED})
             }
+
+            // Send our name to the remote peer
+            this.sndNewName(this.chatWidgetRef.getUserName()[0])
+
         })
         peer.on('stream', stream => {
             // FIXME: is there a better solution?
@@ -99,10 +138,12 @@ class Room extends React.Component {
         peer.on('data', data => {
             var dataObj = JSON.parse(data)
             if (dataObj.type == 'msg') {
-                var joined = this.state.msgBoxData.concat([dataObj.content])
-                this.setState({msgBoxData: joined}, this.refreshMsgBox)
+                var joined = this.state.msgBoxData.concat([ `${dataObj.name}: ${dataObj.content}`])
+                this.setState({msgBoxData: joined}, this.chatWidgetRef.refreshMsgBox)
             } else if (dataObj.type == 'player') {
                 this.cinemaWidgetRef.handlePlayerData(dataObj)
+            } else if (dataObj.type == 'newname') {
+                this.chatWidgetRef.setUserName(null, dataObj.content)
             }
         })
     }
@@ -132,24 +173,45 @@ class Room extends React.Component {
         })
     }
 
-    sndMsg = (msg) => {
-        var data = {
-            type: 'msg',
-            content: msg
-        }
-        var joined = this.state.msgBoxData.concat([msg])
-        this.setState({msgBoxData: joined}, this.refreshMsgBox)
+    isConnected = () => {
         if (this.state.connectedStatus == ConnectedStatus.HOST_CONNECTED || 
             this.state.connectedStatus == ConnectedStatus.GUEST_CONNECTED) {
-            this.state.peer.send(JSON.stringify(data))
+            return true
         }
+        return false
+    }
+
+    sndNewName = (name) => {
+        if (!this.isConnected()) {
+            return
+        }
+        var data = {
+            type: 'newname',
+            content: name,
+        }
+        this.state.peer.send(JSON.stringify(data))
+    }
+
+    sndMsg = (msg) => {
+        if (!this.isConnected()) {
+            return
+        }
+        var data = {
+            type: 'msg',
+            content: msg,
+            name: this.chatWidgetRef.getUserName()[0]
+        }
+        var joined = this.state.msgBoxData.concat([`${this.chatWidgetRef.getUserName()[0]}: ${msg}`])
+        this.setState({msgBoxData: joined}, this.chatWidgetRef.refreshMsgBox)
+        this.state.peer.send(JSON.stringify(data))
     }
 
     sndData = (data) => {
+        if (!this.isConnected()) {
+            return
+        }
         this.state.peer.send(data)
     }
-
-
 
     renderFull = () => {
         if (this.state.full) {
@@ -160,7 +222,7 @@ class Room extends React.Component {
     render() {
         return (
             <Layout className="layout" style={{ minHeight: "100vh", maxHeight: "100vh" }}>
-                <Header className="header">Together v0.0.1</Header>
+                <Header className="header">Together v0.0.2</Header>
                 <Content className="content">
                     <div className="chatWidgetWrapper">
                         <ChatWidget 
@@ -168,9 +230,11 @@ class Room extends React.Component {
                             peer={this.state.peer} 
                             userMediaOnGotten={this.userMediaOnGotten} 
                             sndMsg={this.sndMsg}
+                            sndNewName={this.sndNewName}
                             localStream={this.state.localStream}
                             test={this.state.test}
                             ref={e => this.chatWidgetRef = e}
+                            switchCamera={this.switchCamera}
                             remoteStream={this.state.remoteStream}>
                         </ChatWidget>
                         <p style={{ color: "white"}} > Current Status: {this.state.connectedStatus} </p>
