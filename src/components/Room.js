@@ -139,7 +139,11 @@ class Room extends React.Component {
         peer.on('data', data => {
             var dataObj = JSON.parse(data)
             if (dataObj.type == 'msg') {
-                var joined = this.state.msgBoxData.concat([ `${dataObj.name}: ${dataObj.content}`])
+                var joined = this.state.msgBoxData.concat([ {
+                    isLocal: false,
+                    name: this.chatWidgetRef.getUserName()[1],
+                    content: dataObj.content
+                }])
                 this.setState({msgBoxData: joined}, this.chatWidgetRef.refreshMsgBox)
             } else if (dataObj.type == 'player') {
                 this.cinemaWidgetRef.handlePlayerData(dataObj)
@@ -203,9 +207,12 @@ class Room extends React.Component {
         var data = {
             type: 'msg',
             content: msg,
-            name: this.chatWidgetRef.getUserName()[0]
         }
-        var joined = this.state.msgBoxData.concat([`${this.chatWidgetRef.getUserName()[0]}: ${msg}`])
+        var joined = this.state.msgBoxData.concat([{
+            isLocal: true,
+            name: this.chatWidgetRef.getUserName()[0],
+            content: msg
+        }])
         this.setState({msgBoxData: joined}, this.chatWidgetRef.refreshMsgBox)
         this.state.peer.send(JSON.stringify(data))
     }

@@ -8,7 +8,6 @@ class ChatWidget extends React.Component {
         super()
         this.state = {
             chatInputValue: '',
-            msgBoxData: [],
             localUserName: '',
             remoteUserName: ''
         }
@@ -67,6 +66,22 @@ class ChatWidget extends React.Component {
         return [this.state.localUserName, this.state.remoteUserName]
     }
 
+    renderChatItem = (data) => {
+        if (data.isLocal) {
+            return (
+                <div className="localChatItem">
+                    {data.name}: {data.content}
+                </div>
+            )
+        } else {
+            return (
+                <div className="remoteChatItem">
+                    {data.name}: {data.content}
+                </div>
+            )
+        }
+    }
+
     render() {
         return (
             <div className="chatWidgetInnerWrapper">
@@ -85,9 +100,7 @@ class ChatWidget extends React.Component {
 
 
                 <div className="msgBox" >
-                    {this.props.msgBoxData.map((data) => (
-                        <p>{data}</p>
-                    ))}
+                    {this.props.msgBoxData.map(this.renderChatItem)}
                 </div>
 
                 <div className="inputArea" onKeyDown={this.inputAreaOnKeyDown}>

@@ -22,3 +22,10 @@
     flex: 1;
     overflow: auto;
 }
+
+.localChatItem {
+    text-align: right;
+}
+
+.remoteChatItem {
+}
