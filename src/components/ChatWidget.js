@@ -42,7 +42,6 @@ class ChatWidget extends React.Component {
                 <div className="cameraArea">
                     <video autoPlay id="localVideo" muted ref={video => (this.localVideo = video)}></video>
                     <video autoPlay id="remoteVideo" ref={video => (this.remoteVideo = video)}></video>
-                    <p>{this.props.test}</p>
                 </div>
 
 
