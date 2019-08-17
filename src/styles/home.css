@@ -45,6 +45,7 @@
   top: 25.1%;
   left: 8.3%;
   width: 33.6%;
+  max-height: 40vh;
 }
 
 .undraw_synchronize_ccxk {
@@ -53,35 +54,6 @@
   left: 44.8%;
   width: 46.9%;
 
-}
-
-.btn-bg-1-wrapper {
-  position: absolute;
-  top: 62.3%;
-  left: 8.1%;
-  width: 12.4%;
-  height: 4.8%;
-  text-align: center;
-}
-
-.btn-bg-1 {
-  width: 100%;
-  left: 0;
-  position: absolute;
-  z-index: -1;
-}
-
-.btn-bg-1-text {
-  width: 100%;
-  left: 0;
-  right: 0;
-  position: absolute;
-  top: 18%;
-  font-size: 0.18em;
-  color: white;
-  font-family: Montserrat-Medium;
-  color: #FFFFFF;
-  text-align: center;
 }
 
 .boarder {
@@ -93,9 +65,17 @@
 
 .footer {
   font-family: Montserrat-Regular;
-  font-size: 0.14em;
+  font-size: 0.18em;
   color: #9B9B9B;
   position: absolute;
   top: 94.5%;
   left: 5.2%;
+}
+
+.btn-wrapper {
+  position: absolute;
+  top: 62.3%;
+  left: 8.1%;
+  width: 12.4%;
+  height: 4.8%;
 }

@@ -1,15 +1,22 @@
 import React from 'react'
 
+import TButton from './Button'
+
 import undraw_synchronize_ccxk from '../assets/undraw_synchronize_ccxk.png'
 import logo from '../assets/logo.png'
 import bg_top from '../assets/bg-top.png'
-import btn_bg_1 from '../assets/btn-bg-1.png'
 
 import '../styles/home.css'
+import { Button } from 'antd';
 
 class Home extends React.Component {
-  constructor() {
+  constructor({history}) {
     super()
+    this.history = history
+  }
+
+  goToRoomInput = (e, history) => {
+    this.history.push('/gotoroom')
   }
 
   render() {
@@ -36,12 +43,9 @@ class Home extends React.Component {
           </p>
         </div>
 
-        <div className='btn-bg-1-wrapper'>
-          <img className='btn-bg-1' src={btn_bg_1}></img>
-          {/* <span>Create Your Space</span> */}
-          <span className='btn-bg-1-text'>Create Your Space</span>
+        <div className='btn-wrapper'>
+          <TButton value='Create your own space' onClick={this.goToRoomInput}></TButton>
         </div>
-
         <div className='boarder'></div>
         <div className='footer'>© 2019 Together - Made with ♥ by Eden & Freda</div>
       </div>
