@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Room from './components/Room';
+import Home from './components/Home';
 import './styles/room.css';
 import './App.css';
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -10,7 +11,8 @@ class App extends Component {
     return (
       <BrowserRouter>
        <React.Fragment>
-          <Route path="/" exact component={GoToRoomInput}/>
+          <Route path="/" exact component={Home}/>
+          <Route path="/gotoroom" exact component={GoToRoomInput}/>
           <Route path="/:roomId" exact component={Room}/>
         </React.Fragment>
       </BrowserRouter>

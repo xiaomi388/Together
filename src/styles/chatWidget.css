@@ -1,13 +1,13 @@
 #localVideo{
-    width: 100%;
-    /* visibility: hidden; */
-    background: #2F2E41;
+  width: 100%;
+  /* visibility: hidden; */
+  background: #2F2E41;
 }
 
 #remoteVideo{
-    width: 100%;
-    /* visibility: hidden; */
-    background: #2F2E41;
+  width: 100%;
+  /* visibility: hidden; */
+  background: #2F2E41;
 }
 
 .chatWidgetInnerWrapper {
@@ -34,4 +34,8 @@
 .cameraArea {
     padding-bottom: 10px;
     border-bottom: 2px solid #F1F1F1;
+}
+
+.localChatItem {
+  text-align: right;
 }

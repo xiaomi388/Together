@@ -11,8 +11,8 @@ const ConnectedStatus = {
     UNCONNECTED: 'unconnected',
     HOST_WAITING: 'waiting for the guest',
     GUEST_WAITING: 'waiting for the host',
-    HOST_CONNECTED: 'connected to the host',
-    GUEST_CONNECTED: 'connected to the guest'
+    HOST_CONNECTED: 'connected to the guest',
+    GUEST_CONNECTED: 'connected to the host'
 }
 
 class Room extends React.Component {
@@ -23,10 +23,12 @@ class Room extends React.Component {
             peer: null,
             full: false,
             test: "helloworld",
-            localStream: null,
             msgBoxData: [],
             connectedStatus: ConnectedStatus.UNCONNECTED,
         }
+        this.isLocalCameraOpen = true
+        this.localStream = null
+        this.remoteStream = null
         this.chatWidgetRef = null
         this.cinemaWidgetRef = null
     }
@@ -73,32 +75,30 @@ class Room extends React.Component {
     // New a peer object and register callback
     enter = (roomId) => {
         var peerConstructor = new PeerConstrutor()
-        const peer = peerConstructor.init(this.state.localStream, this.state.initiator)
+        const peer = peerConstructor.init(this.localStream, this.state.initiator)
         this.setState({ peer })
         this.registerPeerCallback(roomId)
     }
 
     switchCamera = (e) => {
-        console.log(this.state.localStream)
-        if (this.state.localStream) {
-            if (this.peer) {
-                this.peer.removeStream(this.state.localStream)
-            }
-            if (this.state.localStream) {
-                let tracks = this.state.localStream.getTracks();
+        if (this.isLocalCameraOpen) {
+            if (this.localStream) {
+                let tracks = this.localStream.getTracks();
                 tracks.forEach(function(track) {
-                    track.stop();
+                    track.enabled = false;
                 });
             }
-            this.chatWidgetRef.setVideoStream(null, null)
-            this.setState({localStream: null})
+            this.isLocalCameraOpen = false
         } else {
-            this.getUserMedia(() => {
-                this.peer.addStream(this.state.localStream)
-            })
+            if (this.localStream) {
+                let tracks = this.localStream.getTracks();
+                tracks.forEach(function(track) {
+                    track.enabled = true;
+                });
+            }
+            this.isLocalCameraOpen = true
         }
     }
-
 
     registerPeerCallback(roomId) {
         var peer = this.state.peer
@@ -129,8 +129,9 @@ class Room extends React.Component {
 
         })
         peer.on('stream', stream => {
+            console.log('haha!')
             // FIXME: is there a better solution?
-            this.chatWidgetRef.setVideoStream(null, stream)
+            this.chatWidgetRef.setVideoStream(stream, false)
         })
         peer.on('error', function (err) {
             console.log(err)
@@ -138,7 +139,11 @@ class Room extends React.Component {
         peer.on('data', data => {
             var dataObj = JSON.parse(data)
             if (dataObj.type == 'msg') {
-                var joined = this.state.msgBoxData.concat([ `${dataObj.name}: ${dataObj.content}`])
+                var joined = this.state.msgBoxData.concat([ {
+                    isLocal: false,
+                    name: this.chatWidgetRef.getUserName()[1],
+                    content: dataObj.content
+                }])
                 this.setState({msgBoxData: joined}, this.chatWidgetRef.refreshMsgBox)
             } else if (dataObj.type == 'player') {
                 this.cinemaWidgetRef.handlePlayerData(dataObj)
@@ -164,12 +169,15 @@ class Room extends React.Component {
                 audio: true
             }
             navigator.getUserMedia(op, stream => {
-                this.setState({ localStream: stream })
+                this.localStream = stream
 
                 // FIXME: is there a better solution?
-                this.chatWidgetRef.setVideoStream(stream, null)
+                this.chatWidgetRef.setVideoStream(stream)
                 resolve()
-            }, () => { })
+            }, () => {
+                console.log('fail?')
+                resolve()
+             })
         })
     }
 
@@ -199,9 +207,12 @@ class Room extends React.Component {
         var data = {
             type: 'msg',
             content: msg,
-            name: this.chatWidgetRef.getUserName()[0]
         }
-        var joined = this.state.msgBoxData.concat([`${this.chatWidgetRef.getUserName()[0]}: ${msg}`])
+        var joined = this.state.msgBoxData.concat([{
+            isLocal: true,
+            name: this.chatWidgetRef.getUserName()[0],
+            content: msg
+        }])
         this.setState({msgBoxData: joined}, this.chatWidgetRef.refreshMsgBox)
         this.state.peer.send(JSON.stringify(data))
     }
@@ -222,7 +233,6 @@ class Room extends React.Component {
     render() {
         return (
             <Layout className="layout" style={{ minHeight: "100vh", maxHeight: "100vh" }}>
-                <Header className="header">Together v0.0.2</Header>
                 <Content className="content">
                     <div className="cinemaWidgetWrapper">
                         <CinemaWidget 
@@ -238,13 +248,13 @@ class Room extends React.Component {
                             userMediaOnGotten={this.userMediaOnGotten} 
                             sndMsg={this.sndMsg}
                             sndNewName={this.sndNewName}
-                            localStream={this.state.localStream}
+                            localStream={this.localStream}
                             test={this.state.test}
                             ref={e => this.chatWidgetRef = e}
                             switchCamera={this.switchCamera}
-                            remoteStream={this.state.remoteStream}>
+                            remoteStream={this.remoteStream}>
                         </ChatWidget>
-                        <p style={{ color: "white"}} > Current Status: {this.state.connectedStatus} </p>
+                        <p> Current Status: {this.state.connectedStatus} </p>
                     </div>
                 </Content>
             </Layout>
