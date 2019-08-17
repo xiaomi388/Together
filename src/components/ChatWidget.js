@@ -61,38 +61,6 @@ class ChatWidget extends React.Component {
       this.setState({remoteUserName, remoteUserName})
     }
 
-    render() {
-        return (
-            <div className="chatWidgetInnerWrapper">
-                <div className="cameraArea">
-                    <div className="localCameraArea">
-                        <Button style={{ width: '100%'}} type="primary" onClick={this.props.switchCamera} >Turn On/Off Camera</Button>
-                        <Input value={this.state.localUserName} onChange={ e => this.handleNameInput(e) } />
-                        <video autoPlay id="localVideo" muted ref={video => (this.localVideo = video)}></video>
-                    </div>"
-
-                    <div className="remoteCameraArea">
-                        <Input value={this.state.remoteUserName} disabled />
-                        <video autoPlay id="remoteVideo" ref={video => (this.remoteVideo = video)}></video>
-                    </div>"
-                </div>
-
-
-                <div className="msgBox" >
-                    {this.props.msgBoxData.map((data) => (
-                        <p>{data}</p>
-                    ))}
-                </div>
-
-                <div className="inputArea">
-                    <Input id="inputBox" 
-                        size= "large"
-                        placeholder="Type a message here..." 
-                        onChange={ e => this.handleChatInput(e)}
-                        onPressEnter = {(e) => this.props.sndMsg(this.state.chatInputValue)} />
-                </div>
-            </div>
-        )
   }
 
   getUserName = () => {
@@ -113,6 +81,38 @@ class ChatWidget extends React.Component {
         </div>
       )
     }
+  }
+
+  render() {
+    return (
+      <div className="chatWidgetInnerWrapper">
+        <div className="cameraArea">
+          <div className="localCameraArea">
+            <Button style={{ width: '100%'}} type="primary" onClick={this.props.switchCamera} >Turn On/Off Camera</Button>
+            <Input value={this.state.localUserName} onChange={ e => this.handleNameInput(e) } />
+            <video autoPlay id="localVideo" muted ref={video => (this.localVideo = video)}></video>
+          </div>
+
+          <div className="remoteCameraArea">
+            <Input value={this.state.remoteUserName} disabled />
+            <video autoPlay id="remoteVideo" ref={video => (this.remoteVideo = video)}></video>
+          </div>
+        </div>
+
+
+        <div className="msgBox" >
+          {this.props.msgBoxData.map(this.renderChatItem)}
+        </div>
+
+        <div className="inputArea">
+            <Input id="inputBox" 
+                size= "large"
+                placeholder="Type a message here..." 
+                onChange={ e => this.handleChatInput(e)}
+                onPressEnter = {(e) => this.props.sndMsg(this.state.chatInputValue)} />
+        </div>
+      </div>
+    )
   }
 }
 
