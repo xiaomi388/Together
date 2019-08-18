@@ -12,7 +12,9 @@ const ConnectedStatus = {
     HOST_WAITING: 'waiting for the guest',
     GUEST_WAITING: 'waiting for the host',
     HOST_CONNECTED: 'connected to the guest',
-    GUEST_CONNECTED: 'connected to the host'
+    GUEST_CONNECTED: 'connected to the host',
+    CONNECTING: 'connecting to the peer',
+    FULL: 'the room is full'
 }
 
 class Room extends React.Component {
@@ -67,7 +69,7 @@ class Room extends React.Component {
             this.chatWidgetRef.setUserName('Host')
         })
         socket.on('full', () => {
-            this.setState({ full: true })
+            this.setState({ full: true, connectedStatus: ConnectedStatus.FULL })
         })
         socket.emit('join', { roomId: roomId })
     }
