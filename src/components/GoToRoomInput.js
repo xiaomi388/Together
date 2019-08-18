@@ -25,7 +25,7 @@ class GoToRoomInput extends React.Component {
 
   onClickCopyButton = (e) => {
     navigator.clipboard.writeText(this.linkRef.state.value)
-    message.success('Shared link has been copied to your clipboard!');
+    message.success('The shared link has been copied to your clipboard!');
   }
 
 
