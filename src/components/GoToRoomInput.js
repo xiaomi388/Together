@@ -4,7 +4,7 @@ import '../styles/goToRoomInput.css'
 
 import TButton from './Button'
 
-import { Input, Icon } from 'antd'
+import { message, Input, Icon } from 'antd'
 import logo from '../assets/logo.png'
 import bg_top from '../assets/bg-top.png'
 import undraw_link_shortener_mvf6 from '../assets/undraw_link_shortener_mvf6.png'
@@ -20,11 +20,14 @@ class GoToRoomInput extends React.Component {
     super()
     this.history = history
     this.roomId = shortId.generate()
+    this.linkRef = null
   }
 
   onClickCopyButton = (e) => {
-    alert('Copied link to your clipboard!')
+    navigator.clipboard.writeText(this.linkRef.state.value)
+    message.success('Shared link has been copied to your clipboard!');
   }
+
 
   getCopyButton = () => {
     return (
@@ -43,7 +46,7 @@ class GoToRoomInput extends React.Component {
       <p className="title">You’ve created a new space!</p>
       <p className="subtitle">Now, invite your friend to this space by sharing this link.</p>
       <div className="link-wrapper">
-        <Input readOnly addonAfter={this.getCopyButton()} className='link-input' value={`${window.location.protocol}//${window.location.host}/room/${this.roomId}`}></Input>
+        <Input ref={e => this.linkRef = e} readOnly addonAfter={this.getCopyButton()} className='link-input' value={`${window.location.protocol}//${window.location.host}/room/${this.roomId}`}></Input>
         {/* <div className='link-copy-button'></div> */}
       </div>
       <div className="roominput-btn-wrapper">
