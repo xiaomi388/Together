@@ -29,8 +29,8 @@
 }
 
 .main-intro {
-  font-family: 'Montserrat-Medium';
-  font-size: 3em;
+  font-family: 'lucida grande';
+  font-size: 2.6em;
   color: #4A4A4A;
   line-height: 120%;
 }
@@ -70,15 +70,19 @@
   z-index: -1;
 }
 
+.btn-bg-1-wrapper:hover {
+  cursor: pointer;
+}
+
 .btn-bg-1-text {
   width: 100%;
   left: 0;
   right: 0;
   position: absolute;
   top: 18%;
-  font-size: 1.2vw;
+  font-size: 1vw;
   color: white;
-  font-family: Montserrat-Medium;
+  font-family: 'lucida grande';
   color: #FFFFFF;
   text-align: center;
 }
@@ -91,10 +95,14 @@
 }
 
 .footer {
-  font-family: Montserrat-Regular;
+  font-family: 'lucida grande';
   font-size: 14px;
   color: #9B9B9B;
   position: absolute;
   top: 94.5%;
   left: 5.2%;
+}
+
+.red {
+  color: red;
 }

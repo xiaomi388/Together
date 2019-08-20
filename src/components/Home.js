@@ -43,7 +43,7 @@ class Home extends React.Component {
         </div>
 
         <div className='boarder'></div>
-        <div className='footer'>© 2019 Together - Made with ♥ by Eden & Freda</div>
+        <div className='footer'>© 2019 Together - Made with <span className="red">♥</span> by Eden & Freda</div>
       </div>
     )
   }
