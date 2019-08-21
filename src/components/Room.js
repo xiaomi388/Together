@@ -163,21 +163,26 @@ class Room extends React.Component {
 
     getUserMedia(cb) {
         return new Promise((resolve, reject) => {
-            navigator.getUserMedia = navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.mediaDevices.getUserMedia;
+            // if (navigator.mediaDevices) {
+            //   navigator.getUserMedia = navigator.mediaDevices.getUserMedia
+            // }
+            navigator.getUserMedia = navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
             const op = {
                 video: {
                     width: { min: 160, ideal: 640, max: 1280 },
                     height: { min: 120, ideal: 360, max: 720 },
+                    facingMode: 'user'
                 },
                 audio: true
             }
-            navigator.getUserMedia(op, stream => {
+            navigator.mediaDevices.getUserMedia(op).then(stream => {
                 this.localStream = stream
+                console.log('haha')
 
                 // FIXME: is there a better solution?
                 this.chatWidgetRef.setVideoStream(stream)
                 resolve()
-            }, () => {
+            }).catch(() => {
                 console.log('fail?')
                 resolve()
              })
