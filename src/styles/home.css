@@ -15,24 +15,27 @@
   height: auto;
   top: 2.9%;
   left: 5.3%;
-  
-  /* width: 7.9%; */
 }
 
 .home-wrapper {
   position: relative;
-  min-width: "100vh";
-  padding-top: 56.5%;
-  /* min-height: "100vh"; */
-  font-size: 1vw;
-  /* display: flex; */
+  min-width: 100vw;
+  height: 100vh;
+  min-height: 700px;
+  font-size: 5vw;
 }
 
 .main-intro {
   font-family: 'lucida grande';
   font-size: 2.6em;
+  font-family: 'Montserrat-Medium';
+  font-size: 0.48em;
   color: #4A4A4A;
   line-height: 120%;
+}
+
+.sub-intro {
+  font-size: 0.22em;
 }
 
 .intro-purple {
@@ -44,6 +47,7 @@
   top: 25.1%;
   left: 8.3%;
   width: 33.6%;
+  max-height: 40vh;
 }
 
 .undraw_synchronize_ccxk {
@@ -54,7 +58,7 @@
 
 }
 
-.btn-bg-1-wrapper {
+/* .btn-bg-1-wrapper {
   position: absolute;
   top: 62.3%;
   left: 8.1%;
@@ -85,18 +89,18 @@
   font-family: 'lucida grande';
   color: #FFFFFF;
   text-align: center;
-}
+} */
 
 .boarder {
   position: absolute;
   width: 100%;
   top: 90.7%;
-  border: 0.7px solid #E0E0E0;
+  border: 0.01em solid #E0E0E0;
 }
 
 .footer {
   font-family: 'lucida grande';
-  font-size: 14px;
+  font-size: 0.18em;
   color: #9B9B9B;
   position: absolute;
   top: 94.5%;
@@ -105,4 +109,12 @@
 
 .red {
   color: red;
+}
+
+.btn-wrapper {
+  position: absolute;
+  top: 62.3%;
+  left: 8.1%;
+  width: 12.4%;
+  height: 4.8%;
 }

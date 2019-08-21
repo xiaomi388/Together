@@ -108,8 +108,13 @@ class ChatWidget extends React.Component {
             <Input id="inputBox" 
                 size= "large"
                 placeholder="Type a message here..." 
+                value={this.state.chatInputValue}
                 onChange={ e => this.handleChatInput(e)}
-                onPressEnter = {(e) => this.props.sndMsg(this.state.chatInputValue)} />
+                onPressEnter = {(e) => { 
+                  var msg = this.state.chatInputValue
+                  this.props.sndMsg(msg) 
+                  this.setState({chatInputValue: ''})
+                }} />
         </div>
       </div>
     )
