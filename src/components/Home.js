@@ -44,7 +44,7 @@ class Home extends React.Component {
         </div>
 
         <div className='btn-wrapper'>
-          <TButton value='Create your own space' onClick={this.goToRoomInput}></TButton>
+          <TButton value='Create Your Space' onClick={this.goToRoomInput}></TButton>
         </div>
         <div className='boarder'></div>
         <div className='footer'>© 2019 Together - Made with <span className="red">♥</span> by Eden & Freda</div>

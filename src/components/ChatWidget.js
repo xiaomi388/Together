@@ -70,14 +70,14 @@ class ChatWidget extends React.Component {
   renderChatItem = (data) => {
     if (data.isLocal) {
       return (
-        <div className="localChatItem">
-          {data.name}: {data.content}
+        <div className="chatItem localChatItem">
+          {data.content}
         </div>
       )
     } else {
       return (
-        <div className="remoteChatItem">
-          {data.name}: {data.content}
+        <div className="chatItem remoteChatItem">
+          {data.content}
         </div>
       )
     }
@@ -87,18 +87,17 @@ class ChatWidget extends React.Component {
     return (
       <div className="chatWidgetInnerWrapper">
         <div className="cameraArea">
-          <div className="localCameraArea">
-            <Button style={{ width: '100%'}} type="primary" onClick={this.props.switchCamera} >Turn On/Off Camera</Button>
-            <Input value={this.state.localUserName} onChange={ e => this.handleNameInput(e) } />
-            <video autoPlay id="localVideo" muted ref={video => (this.localVideo = video)}></video>
-          </div>
-
           <div className="remoteCameraArea">
             <Input value={this.state.remoteUserName} disabled />
             <video autoPlay id="remoteVideo" ref={video => (this.remoteVideo = video)}></video>
           </div>
+          <div className="localCameraArea">
+            <Button className="toggleCamera" shape="circle" type="primary" icon="video-camera" onClick={this.props.switchCamera} ></Button>
+            <Input value={this.state.localUserName} onChange={ e => this.handleNameInput(e) } />
+            <video autoPlay id="localVideo" muted ref={video => (this.localVideo = video)}></video>
+          </div>
         </div>
-
+        <p style={{ textAlign: 'right', marginRight: '5%' }}> Current Status: {this.props.currentState} </p>
 
         <div className="msgBox" >
           {this.props.msgBoxData.map(this.renderChatItem)}

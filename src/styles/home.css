@@ -27,8 +27,6 @@
 
 .main-intro {
   font-family: 'lucida grande';
-  font-size: 2.6em;
-  font-family: 'Montserrat-Medium';
   font-size: 0.48em;
   color: #4A4A4A;
   line-height: 120%;
@@ -57,39 +55,6 @@
   width: 46.9%;
 
 }
-
-/* .btn-bg-1-wrapper {
-  position: absolute;
-  top: 62.3%;
-  left: 8.1%;
-  width: 12.4%;
-  height: 4.8%;
-  text-align: center;
-}
-
-.btn-bg-1 {
-  width: 100%;
-  left: 0;
-  position: absolute;
-  z-index: -1;
-}
-
-.btn-bg-1-wrapper:hover {
-  cursor: pointer;
-}
-
-.btn-bg-1-text {
-  width: 100%;
-  left: 0;
-  right: 0;
-  position: absolute;
-  top: 18%;
-  font-size: 1vw;
-  color: white;
-  font-family: 'lucida grande';
-  color: #FFFFFF;
-  text-align: center;
-} */
 
 .boarder {
   position: absolute;

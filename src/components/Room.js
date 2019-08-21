@@ -254,9 +254,9 @@ class Room extends React.Component {
                             test={this.state.test}
                             ref={e => this.chatWidgetRef = e}
                             switchCamera={this.switchCamera}
-                            remoteStream={this.remoteStream}>
+                            remoteStream={this.remoteStream}
+                            currentState={this.state.connectedStatus}>
                         </ChatWidget>
-                        <p style={{ textAlign: 'right', marginRight: '5%' }}> Current Status: {this.state.connectedStatus} </p>
                     </div>
                 </Content>
             </Layout>
