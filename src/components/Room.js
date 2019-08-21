@@ -18,8 +18,9 @@ const ConnectedStatus = {
 }
 
 class Room extends React.Component {
-    constructor() {
+    constructor({history}) {
         super()
+        this.history = history
         this.state = {
             initiator: false,
             peer: null,
@@ -82,7 +83,7 @@ class Room extends React.Component {
         this.registerPeerCallback(roomId)
     }
 
-    switchCamera = (e) => {
+    toggleCamera = (e) => {
         if (this.isLocalCameraOpen) {
             if (this.localStream) {
                 let tracks = this.localStream.getTracks();
@@ -253,7 +254,7 @@ class Room extends React.Component {
                             localStream={this.localStream}
                             test={this.state.test}
                             ref={e => this.chatWidgetRef = e}
-                            switchCamera={this.switchCamera}
+                            toggleCamera={this.toggleCamera}
                             remoteStream={this.remoteStream}
                             currentState={this.state.connectedStatus}>
                         </ChatWidget>

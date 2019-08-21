@@ -79,4 +79,5 @@
   position: absolute !important;
   right: 5px !important;
   bottom: 5px !important;  
+  z-index: 1;
 }
