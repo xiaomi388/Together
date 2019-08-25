@@ -35,7 +35,8 @@
 .title {
   position: absolute;
   top: 47.2%;
-  font-family: Montserrat-Bold;
+  font-family: 'lucida grande';
+  font-weight: bold;
   font-size: 0.24em;
   color: #4A4A4A;
 
@@ -48,8 +49,8 @@
 .subtitle {
   position: absolute;
   top: 54.6%;
-  font-family: Montserrat-Medium;
-  font-size: 0.20em;
+  font-family: 'lucida grande';
+  font-size: 0.16em;
   color: #4A4A4A;
   text-align: center;
 
