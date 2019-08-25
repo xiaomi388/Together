@@ -92,8 +92,8 @@ class ChatWidget extends React.Component {
             <video autoPlay id="remoteVideo" ref={video => (this.remoteVideo = video)}></video>
           </div>
           <div className="localCameraArea">
-            <Button className="toggleCamera" shape="circle" type="primary" icon="video-camera" onClick={this.props.switchCamera} ></Button>
             <Input value={this.state.localUserName} onChange={ e => this.handleNameInput(e) } />
+            <Button className="toggleCamera" shape="circle" type="primary" icon="video-camera" onClick={this.props.toggleCamera} ></Button>
             <video autoPlay id="localVideo" muted ref={video => (this.localVideo = video)}></video>
           </div>
         </div>

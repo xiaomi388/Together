@@ -40,7 +40,7 @@ class GoToRoomInput extends React.Component {
   render() {
     return (<div className="enter-room-container">
       <img src={bg_top} className='bg-top'></img>
-      <img src={logo} className='logo'></img>
+      <img src={logo} onClick={e => window.location.href = '/'}  className='logo'></img>
       <img src={undraw_link_shortener_mvf6} className='undraw_link_shortener_mvf6'></img>
 
       <p className="title">You’ve created a new space!</p>

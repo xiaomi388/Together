@@ -46,6 +46,10 @@
   text-align: center;
 }
 
+.logo {
+  cursor: pointer;
+}
+
 .subtitle {
   position: absolute;
   top: 54.6%;

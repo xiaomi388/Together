@@ -70,7 +70,7 @@ class CinemaWidget extends React.Component {
   render() {
     return (<div className="cinemaWidgetInnerWrapper">
       <div className="header">
-        <img className="logo" src={require('../assets/logo.png')} alt="logo" />
+        <img className="logo" onClick={e => window.location.href = '/' } src={require('../assets/logo.png')} alt="logo" />
       </div>
       <div className="playerWrapper">
         <ReactPlayer className="player" url={this.state.videoUrl}
