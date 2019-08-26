@@ -1,23 +1,99 @@
 .playerWrapper {
+    margin: 20px 0;
     flex: 1;
-    background-color: black;
+    /* background-color: black; */
+}
+
+.header {
+    display: flex;
+    position: relative;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.version {
+    position: absolute;
+    right: 0;
+    align-self: center;
+    margin-right: 0 !important;
 }
 
 .cinemaWidgetInnerWrapper {
+    margin: 20px;
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 .controlPanelWrapper {
-    margin: 0 auto;
+    width: 100%;
+    margin: 10px 0;
     display: flex;
     flex-direction: row;
-    background-color: black;
 }
 
 .player {
     min-height: 100%;
     min-width: 100%;
     flex: 1;
+    background-color: #2F2E41;
 }
+
+.header {
+    height: 30px;
+}
+
+.header .logo {
+    height: 100%;
+}
+
+.info {
+    margin: 10px 0;
+    font-family: Montserrat-Bold;
+    font-size: 24px;
+    color: #6C63FF;
+    text-align: center;
+}
+
+.link, .local {
+    margin: 0 20px;
+    flex: 1;
+}
+
+.link {
+    display: flex;
+    flex-direction: row;
+}
+button {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+#btn-go {
+    background: #33D1B9;
+    border-radius: 5px;
+    width: 50px;
+    margin-left: 10px;
+}
+
+#btn-go:hover {
+    background: rgb(48, 179, 159);
+}
+
+#btn-file {
+    background: #6C63FF;
+    border-radius: 5px;
+    width: 100%;
+    color: #FFFFFF;
+}
+
+#btn-file:hover {
+    background: rgb(82, 76, 199);
+}
+
+input:focus {
+    box-shadow: none !important;
+}
+

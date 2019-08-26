@@ -1,19 +1,105 @@
 #localVideo{
-    width: 100%;
+  width: 100%;
+  /* visibility: hidden; */
+  background: #2F2E41;
 }
 
 #remoteVideo{
-    width: 100%;
+  width: 100%;
+  /* visibility: hidden; */
+  background: #2F2E41;
 }
 
 .chatWidgetInnerWrapper {
+    background: white;
+    margin: 20px 10px;
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 .msgBox {
-    background-color: white; 
+    padding: 10px 0;
+    /* background-color: #f1f1f1;  */
     flex: 1;
-    overflow: auto;
+    overflow: scroll;
+}
+
+#inputBox {
+    background: #FFFFFF;
+    box-shadow: 0 5px 20px 0 rgba(108,99,255,0.20) !important;
+    border-radius: 5px !important;
+}
+
+.cameraArea {
+    display: flex;
+    flex-direction: row;
+}
+
+.localCameraArea {
+  float: right;
+  flex: 4;
+  position: relative;
+  height: fit-content;
+}
+
+.remoteCameraArea {
+  float: left;
+  flex: 6;
+  margin-right: 10px;
+}
+
+.localChatItem {
+  background: #6C63FF;
+  color: white;
+  border-radius: 10px 10px 0 10px;
+  float: right;
+}
+
+.remoteChatItem {
+  background: #F1EFFF;
+  color: #4A4A4A;
+  border-radius: 0px 10px 10px 10px;
+  float: left;
+}
+
+.chatItem {
+  font-size: 16px;
+  width: fit-content;
+  max-width: 80%;
+  padding: 10px 15px;
+  margin: 5px 10px;
+  clear: both;
+  word-wrap: break-word;
+}
+
+.toggleCamera {
+  position: absolute !important;
+  right: 5px !important;
+  bottom: 5px !important;  
+  z-index: 1;
+}
+
+.status {
+  border-bottom: 2px solid #F1F1F1;
+}
+
+.nameLabel {
+  text-align: center;
+  font-size: 14px;
+  color: white;
+  margin-bottom: 0 !important;
+  border-radius: 5px 5px 0 0;
+  background: #2F2E41;
+  line-height: 2;
+}
+
+.localLabel {
+  background: #6C63FF;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.nameInput {
+  position: absolute !important;
 }

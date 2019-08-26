@@ -1,0 +1,86 @@
+.logo-wrapper {
+  width: 36.4%;
+}
+
+.bg-top {
+  top: 0;
+  position: absolute;
+  width: 36.4%;
+  /* float: left; */
+}
+
+.home-wrapper .logo {
+  position: absolute;
+  width: 7.9%;
+  height: auto;
+  top: 2.9%;
+  left: 5.3%;
+  cursor: pointer;
+}
+
+.home-wrapper {
+  position: relative;
+  min-width: 100vw;
+  height: 100vh;
+  min-height: 700px;
+  font-size: 5vw;
+}
+
+.main-intro {
+  font-family: 'lucida grande';
+  font-size: 0.48em;
+  color: #4A4A4A;
+  line-height: 120%;
+}
+
+.sub-intro {
+  font-size: 0.22em;
+}
+
+.intro-purple {
+  color: #725BFF;
+}
+
+.intro-wrapper {
+  position: absolute;
+  top: 25.1%;
+  left: 8.3%;
+  width: 33.6%;
+  max-height: 40vh;
+}
+
+.undraw_synchronize_ccxk {
+  position: absolute;
+  top: 14.9%;
+  left: 44.8%;
+  width: 46.9%;
+
+}
+
+.boarder {
+  position: absolute;
+  width: 100%;
+  top: 90.7%;
+  border: 0.01em solid #E0E0E0;
+}
+
+.footer {
+  font-family: 'lucida grande';
+  font-size: 0.18em;
+  color: #9B9B9B;
+  position: absolute;
+  top: 94.5%;
+  left: 5.2%;
+}
+
+.red {
+  color: red;
+}
+
+.btn-wrapper {
+  position: absolute;
+  top: 62.3%;
+  left: 8.1%;
+  width: 12.4%;
+  height: 4.8%;
+}

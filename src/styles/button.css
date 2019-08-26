@@ -1,0 +1,26 @@
+.btn-bg-1-wrapper {
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn-bg-1 {
+  width: 100%;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+  cursor: pointer;
+}
+
+.btn-bg-1-text {
+  width: 100%;
+  left: 0;
+  right: 0;
+  position: absolute;
+  top: 18%;
+  font-size: 0.18em;
+  color: white;
+  font-family: 'lucida grande';
+  text-align: center;
+  cursor: pointer;
+}

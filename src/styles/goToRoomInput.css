@@ -1,0 +1,95 @@
+.enter-room-container {
+  position: relative;
+  min-width: 100vw;
+  height: 100vh;
+  min-height: 700px;
+  font-size: 6vw;
+}
+
+.bg-top {
+  top: 0;
+  position: absolute;
+  width: 36.4%;
+  /* float: left; */
+}
+
+.enter-room-container .logo {
+  position: absolute;
+  width: 7.9%;
+  height: auto;
+  top: 2.9%;
+  left: 5.3%;
+}
+
+.undraw_link_shortener_mvf6 {
+  width: 15.8%;
+  height: 25.8;
+  top: 19.5%;
+
+  position: absolute;
+  margin: auto;
+  left: 0%;
+  right: 0%
+}
+
+.title {
+  position: absolute;
+  top: 47.2%;
+  font-family: 'lucida grande';
+  font-weight: bold;
+  font-size: 0.24em;
+  color: #4A4A4A;
+
+  margin: auto;
+  left: 0%;
+  right: 0%;
+  text-align: center;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.subtitle {
+  position: absolute;
+  top: 54.6%;
+  font-family: 'lucida grande';
+  font-size: 0.16em;
+  color: #4A4A4A;
+  text-align: center;
+
+  margin: auto;
+  left: 0%;
+  right: 0%
+}
+
+.roominput-btn-wrapper {
+  position: absolute;
+  top: 69.9%;
+  left: 43.8%;
+  width: 12.8%;
+  height: 4.8%;
+}
+
+.link-wrapper {
+  position: absolute;
+  width: 33.9%;
+  top: 58.7%;
+  height: 4.6%;
+  left: 0%;
+  right: 0%;
+  margin: 0 auto;
+}
+
+.link-copy-button {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.link-input {
+  float: left;
+  width: 96.1%;
+  height: 100%;
+  font-size: .2em;
+}
