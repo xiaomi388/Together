@@ -3,13 +3,24 @@ import '../styles/chatWidget.css'
 
 import { Input, Layout, Button } from 'antd'
 
+const ConnectedStatus = {
+  UNCONNECTED: 'unconnected',
+  HOST_WAITING: 'waiting for the guest',
+  GUEST_WAITING: 'waiting for the host',
+  HOST_CONNECTED: 'connected to the guest',
+  GUEST_CONNECTED: 'connected to the host',
+  CONNECTING: 'connecting to the peer',
+  FULL: 'the room is full'
+}
+
 class ChatWidget extends React.Component {
   constructor() {
     super()
     this.state = {
       chatInputValue: '',
-      localUserName: '',
-      remoteUserName: ''
+      localUserName: '...',
+      remoteUserName: '...',
+      inputVisible: false
     }
   }
 
@@ -50,8 +61,12 @@ class ChatWidget extends React.Component {
   handleNameInput = (e) => {
     this.setState({localUserName: e.target.value})
     this.props.sndNewName(e.target.value)
+    this.setState({ inputVisible: false})
   }
   
+  showNameInput = (e) => {
+    this.setState({ inputVisible: true})
+  }
 
   setUserName = (localUserName=null, remoteUserName=null) => {
     if (localUserName) {
@@ -88,16 +103,19 @@ class ChatWidget extends React.Component {
       <div className="chatWidgetInnerWrapper">
         <div className="cameraArea">
           <div className="remoteCameraArea">
-            <Input value={this.state.remoteUserName} disabled />
+            <p className="nameLabel">{this.state.remoteUserName}</p>
             <video autoPlay id="remoteVideo" ref={video => (this.remoteVideo = video)}></video>
           </div>
           <div className="localCameraArea">
-            <Input value={this.state.localUserName} onChange={ e => this.handleNameInput(e) } />
+            {this.state.inputVisible ? (
+              <Input className="nameInput" value={this.state.localUserName} onBlur={ e => this.handleNameInput(e) } />
+            ) : null}
+            <p className="nameLabel localLabel" onClick={ e => this.showNameInput(e) }>{this.state.localUserName}</p>
             <Button className="toggleCamera" shape="circle" type="primary" icon="video-camera" onClick={this.props.toggleCamera} ></Button>
             <video autoPlay id="localVideo" muted ref={video => (this.localVideo = video)}></video>
           </div>
         </div>
-        <p style={{ textAlign: 'right', marginRight: '5%' }}> Current Status: {this.props.currentState} </p>
+        <p className="status"> Current Status: {this.props.currentState} </p>
 
         <div className="msgBox" >
           {this.props.msgBoxData.map(this.renderChatItem)}

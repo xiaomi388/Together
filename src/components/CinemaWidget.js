@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Input, Button, Icon } from 'antd'
+import { Input, Button, Icon, Tag } from 'antd'
 import ReactPlayer from 'react-player'
 
 import '../styles/cinemaWidget.css'
@@ -71,6 +71,7 @@ class CinemaWidget extends React.Component {
     return (<div className="cinemaWidgetInnerWrapper">
       <div className="header">
         <img className="logo" onClick={e => window.location.href = '/' } src={require('../assets/logo.png')} alt="logo" />
+        <Tag color="purple" className="version">V 1.0.0</Tag>
       </div>
       <div className="playerWrapper">
         <ReactPlayer className="player" url={this.state.videoUrl}
