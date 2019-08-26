@@ -59,7 +59,6 @@ class ChatWidget extends React.Component {
   }
 
   handleNameInput = (e) => {
-    this.setState({localUserName: e.target.value})
     this.props.sndNewName(e.target.value)
     this.setState({ inputVisible: false})
   }
@@ -108,7 +107,7 @@ class ChatWidget extends React.Component {
           </div>
           <div className="localCameraArea">
             {this.state.inputVisible ? (
-              <Input className="nameInput" value={this.state.localUserName} onBlur={ e => this.handleNameInput(e) } />
+              <Input className="nameInput" value={this.state.localUserName} onChange={e => this.setState({localUserName: e.target.value}) } onBlur={ e => this.handleNameInput(e) } />
             ) : null}
             <p className="nameLabel localLabel" onClick={ e => this.showNameInput(e) }>{this.state.localUserName}</p>
             <Button className="toggleCamera" shape="circle" type="primary" icon="video-camera" onClick={this.props.toggleCamera} ></Button>
