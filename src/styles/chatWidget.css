@@ -32,8 +32,6 @@
 }
 
 .cameraArea {
-    padding-bottom: 10px;
-    border-bottom: 2px solid #F1F1F1;
     display: flex;
     flex-direction: row;
 }
@@ -80,4 +78,28 @@
   right: 5px !important;
   bottom: 5px !important;  
   z-index: 1;
+}
+
+.status {
+  border-bottom: 2px solid #F1F1F1;
+}
+
+.nameLabel {
+  text-align: center;
+  font-size: 14px;
+  color: white;
+  margin-bottom: 0 !important;
+  border-radius: 5px 5px 0 0;
+  background: #2F2E41;
+  line-height: 2;
+}
+
+.localLabel {
+  background: #6C63FF;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.nameInput {
+  position: absolute !important;
 }

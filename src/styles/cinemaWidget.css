@@ -4,8 +4,20 @@
     /* background-color: black; */
 }
 
+.header {
+    display: flex;
+    position: relative;
+}
+
 .logo {
   cursor: pointer;
+}
+
+.version {
+    position: absolute;
+    right: 0;
+    align-self: center;
+    margin-right: 0 !important;
 }
 
 .cinemaWidgetInnerWrapper {
