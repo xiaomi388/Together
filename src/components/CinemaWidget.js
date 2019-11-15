@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Input, Button, Icon, Tag } from 'antd'
-import ReactPlayer from 'react-player'
+import ReactPlayer from 'react-player-cn'
 
 import '../styles/cinemaWidget.css'
 
