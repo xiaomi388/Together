@@ -166,7 +166,7 @@ class Room extends React.Component {
             // if (navigator.mediaDevices) {
             //   navigator.getUserMedia = navigator.mediaDevices.getUserMedia
             // }
-            navigator.getUserMedia = navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+            // navigator.getUserMedia = navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
             const op = {
                 video: {
                     width: { min: 160, ideal: 640, max: 1280 },

@@ -10,13 +10,15 @@ class CinemaWidget extends React.Component {
     super()
     this.state = {
       videoUrl: '',
+      subtitleUrl: '',
       videoPlaying: false,
       videoInputUrl: '',
       isListeningPlayer: true,
       handlePlayerEvent: this.handlePlayerEvent
     }
     this.videoPlayer = null
-    this.inputRef = null
+    this.inputRef = null // stands for video file input ref
+    this.subtitleInputRef = null
   }
 
 
@@ -62,6 +64,11 @@ class CinemaWidget extends React.Component {
     if(file) this.setState({videoUrl: URL.createObjectURL(file)})
     e.target.value = '' // restore to the original status.
   }
+  subtitleInputOnChange = (e) => {
+    const file = e.target.files[0]
+    if(file) this.setState({subtitleUrl: URL.createObjectURL(file)})
+    e.target.value = '' // restore to the original status.
+  }
   handleVideoURLInput = (event) => {
     console.log(event.target.value)
     this.setState({videoInputUrl: event.target.value})
@@ -79,6 +86,13 @@ class CinemaWidget extends React.Component {
           ref={player => { this.videoPlayer = player }}
           onPlay={ e => this.handlePlayerEvent(e, 'play')}
           onPause={ e =>this.handlePlayerEvent(e, 'pause') }
+          config={{
+            file: {
+              tracks: [
+                {kind: 'subtitles', src: this.state.subtitleUrl, srcLang: 'zh', default: true}
+              ]
+            }
+          }}
         />
       </div>
       <div className="info">Play video from...</div>
@@ -102,6 +116,12 @@ class CinemaWidget extends React.Component {
               icon="file"
               onClick={e => this.inputRef.click()}>Select Local Video</Button>
             <input type="file" name="file" onChange={this.fileInputOnChange} style={{ display: 'none' }} ref={e => this.inputRef = e} />
+
+            <Button id="btn-file" type="primary" 
+              size= "large"
+              icon="file"
+              onClick={e => this.subtitleInputRef.click()}>Select Local Subtitle</Button>
+            <input type="file" name="file" onChange={this.subtitleInputOnChange} style={{ display: 'none' }} ref={e => this.subtitleInputRef = e} />
           </div>
         </div>
     </div>)
