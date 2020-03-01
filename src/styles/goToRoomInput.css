@@ -6,12 +6,12 @@
   font-size: 6vw;
 }
 
-.bg-top {
-  top: 0;
-  position: absolute;
-  width: 36.4%;
-  /* float: left; */
-}
+/*.bg-top {*/
+/*  top: 0;*/
+/*  position: absolute;*/
+/*  width: 36.4%;*/
+/*  !* float: left; *!*/
+/*}*/
 
 .enter-room-container .logo {
   position: absolute;

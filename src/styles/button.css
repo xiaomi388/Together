@@ -1,26 +1,33 @@
 .btn-bg-1-wrapper {
-  width: 100%;
   text-align: center;
   cursor: pointer;
+
+  width: 10rem;
+  font-size: 0.8rem;
+
+  position: relative;
 }
 
 .btn-bg-1 {
-  width: 100%;
-  left: 0;
-  position: absolute;
-  z-index: -1;
   cursor: pointer;
+  width: 100%;
+
 }
 
 .btn-bg-1-text {
-  width: 100%;
-  left: 0;
-  right: 0;
   position: absolute;
-  top: 18%;
-  font-size: 0.18em;
+
+  left: 0%;
+  right: 0%;
+
+  top: 0%;
+  bottom: 0%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   color: white;
-  font-family: 'lucida grande';
-  text-align: center;
+
+
   cursor: pointer;
 }
