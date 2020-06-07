@@ -1,7 +1,7 @@
 import Peer from 'simple-peer' 
 
 export default class PeerConstructor {
-    peer = null 
+    peer = null
     init = (stream, initiator) => {
         this.peer = new Peer({
             initiator: initiator,

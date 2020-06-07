@@ -2,7 +2,7 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-server.listen(13334);
+server.listen(80);
 
 io.on('connection', function (socket) {
   socket.on('join', function (data) {
@@ -21,18 +21,18 @@ io.on('connection', function (socket) {
         socket.leave(data.roomId)
         socket.emit('full')
       }
-      
+
     }
   });
   socket.on('signal', (data) => {
     // Redirect the signal message to both peers.
-    io.to(data.room).emit('desc', data.desc)    
+    io.to(data.room).emit('desc', data.desc)
   })
   socket.on('disconnect', () => {
     const roomId = Object.keys(socket.adapter.rooms)[0]
     if (socket.room){
       io.to(socket.room).emit('disconnected')
     }
-    
+
   })
 });
