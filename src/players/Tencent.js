@@ -101,4 +101,4 @@ export class Tencent extends Component {
   }
 }
 
-export default createSinglePlayer(Tencent)
+export default Tencent

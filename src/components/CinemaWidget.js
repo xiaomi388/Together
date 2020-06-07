@@ -20,6 +20,7 @@ class CinemaWidget extends React.Component {
     this.videoPlayer = null;
     this.inputRef = null; // stands for video file input ref
     this.subtitleInputRef = null;
+    ReactPlayer.addCustomPlayer(Tencent)
   }
 
 
