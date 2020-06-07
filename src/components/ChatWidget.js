@@ -69,12 +69,11 @@ class ChatWidget extends React.Component {
 
   setUserName = (localUserName=null, remoteUserName=null) => {
     if (localUserName) {
-      this.setState({localUserName, localUserName})
+      this.setState({localUserName: localUserName})
     }
     if (remoteUserName) {
-      this.setState({remoteUserName, remoteUserName})
+      this.setState({remoteUserName: remoteUserName})
     }
-
   }
 
   getUserName = () => {
@@ -103,15 +102,15 @@ class ChatWidget extends React.Component {
         <div className="cameraArea">
           <div className="remoteCameraArea">
             <p className="nameLabel">{this.state.remoteUserName}</p>
-            <video autoPlay playsInline id="remoteVideo" ref={video => (this.remoteVideo = video)}></video>
+            <video autoPlay playsInline id="remoteVideo" ref={video => (this.remoteVideo = video)}/>
           </div>
           <div className="localCameraArea">
             {this.state.inputVisible ? (
               <Input className="nameInput" value={this.state.localUserName} onChange={e => this.setState({localUserName: e.target.value}) } onBlur={ e => this.handleNameInput(e) } />
             ) : null}
             <p className="nameLabel localLabel" onClick={ e => this.showNameInput(e) }>{this.state.localUserName}</p>
-            <Button className="toggleCamera" shape="circle" type="primary" icon="video-camera" onClick={this.props.toggleCamera} ></Button>
-            <video autoPlay playsInline id="localVideo" muted ref={video => (this.localVideo = video)}></video>
+            <Button className="toggleCamera" shape="circle" type="primary" icon="video-camera" onClick={this.props.toggleCamera} />
+            <video autoPlay playsInline id="localVideo" muted ref={video => (this.localVideo = video)}/>
           </div>
         </div>
         <p className="status"> Current Status: {this.props.currentState} </p>

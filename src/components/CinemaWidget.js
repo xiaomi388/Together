@@ -1,13 +1,14 @@
 import React from 'react'
 
 import { Input, Button, Icon, Tag } from 'antd'
-import ReactPlayer from 'react-player-cn'
+import ReactPlayer from 'react-player'
+import Tencent from '../players/Tencent'
 
 import '../styles/cinemaWidget.css'
 
 class CinemaWidget extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       videoUrl: '',
       subtitleUrl: '',
@@ -15,16 +16,16 @@ class CinemaWidget extends React.Component {
       videoInputUrl: '',
       isListeningPlayer: true,
       handlePlayerEvent: this.handlePlayerEvent
-    }
-    this.videoPlayer = null
-    this.inputRef = null // stands for video file input ref
-    this.subtitleInputRef = null
+    };
+    this.videoPlayer = null;
+    this.inputRef = null; // stands for video file input ref
+    this.subtitleInputRef = null;
   }
 
 
   handlePlayerData = (dataObj) => {
-    if (dataObj.content.action == 'play') {
-      this.setState({videoPlaying: true})
+    if (dataObj.content.action === 'play') {
+      this.setState({videoPlaying: true});
       
       /* Judge: if currentTime is very close to peer.currentTime,
       ** then stop seeking to this time, 
@@ -34,18 +35,18 @@ class CinemaWidget extends React.Component {
       if (Math.abs(this.videoPlayer.getCurrentTime() - dataObj.content.currentTimeSec) > 1) {
         this.videoPlayer.seekTo(dataObj.content.currentTimeSec)
       }
-    }  else if (dataObj.content.action == 'pause') {
-      this.setState({videoPlaying: false})
+    }  else if (dataObj.content.action === 'pause') {
+      this.setState({videoPlaying: false});
       if (Math.abs(this.videoPlayer.getCurrentTime() - dataObj.content.currentTimeSec) > 1) {
         this.videoPlayer.seekTo(dataObj.content.currentTimeSec)
       }
     } 
-  }
+  };
 
   handlePlayerEvent = (event, action) => {
-    if (this.state.videoPlaying != 'pause' && action == 'pause') {
+    if (this.state.videoPlaying !== 'pause' && action === 'pause') {
       this.setState({videoPlaying: false})
-    } else if (this.state.videoPlaying != 'play' && action == 'play') {
+    } else if (this.state.videoPlaying !== 'play' && action === 'play') {
       this.setState({videoPlaying: true})
     }
     var data = {
